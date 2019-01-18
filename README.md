@@ -1,6 +1,8 @@
 # ShopifyChallenge
 This is my Summer 2019 Developer Intern Challenge solution. Free free to play with it. For other applicants, please do not try to directly use this project as your solution.
 
+[![Build Status](https://travis-ci.org/sasoripathos/ShopifyChallenge.png)](https://travis-ci.org/sasoripathos/ShopifyChallenge)
+
 # GitHub Repository
 https://github.com/sasoripathos/ShopifyChallenge
 
