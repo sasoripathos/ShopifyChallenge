@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,16 @@ public class Inventory {
 		else {
 			return archive;
 		}
+	}
+	
+	@GetMapping("product/{name}")
+	public Product getAllProduct(@PathVariable String name) throws ProductNotExistException {
+		for(Product i: archive) {
+			if(i.getTitle().equals(name)) {
+				return i;
+			}
+		}
+		throw new ProductNotExistException(name + " is not a product name!");
 	}
 	
 	@PostMapping("purchase")

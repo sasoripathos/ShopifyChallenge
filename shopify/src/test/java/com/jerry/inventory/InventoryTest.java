@@ -40,14 +40,49 @@ public class InventoryTest {
 			.andExpect(jsonPath("$", hasSize(5)));
 	}
 	
-	/*@Test
-	public void testPurchaseProduct() throws Exception {
-		mvc.perform(get("/shopify/purchase?product=a"))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$", hasSize(5)));
-		mvc.perform(get("/shopify/purchase?product=a"))
+	@Test
+	public void testGetIllegalArgument() throws Exception {
+		mvc.perform(get("/shopify/product?available=3"))
+			.andExpect(status().is4xxClientError())
+			.andExpect(jsonPath("$.status", is(400)))
+			.andExpect(jsonPath("$.reason", containsString("IllegalArgumentException")));
+	}
+	
+	@Test
+	public void testGetOneProduct() throws Exception {
+		mvc.perform(get("/shopify/product/a"))
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$", hasSize(5)));
-	}*/
+			.andExpect(jsonPath("$.title", is("a")))
+			.andExpect(jsonPath("$.price", is(100.5)))
+			.andExpect(jsonPath("$.inventoryCount", is(100)));
+	}
+	
+	@Test
+	public void testGetNotExistProduct() throws Exception {
+		mvc.perform(get("/shopify/product/abc"))
+			.andExpect(status().is4xxClientError())
+			.andExpect(jsonPath("$.status", is(404)))
+			.andExpect(jsonPath("$.reason", is("abc is not a product name!")));
+	}
+	
+	@Test
+	public void testPurchaseProduct() throws Exception {
+		mvc.perform(post("/shopify/purchase?product=b"))
+			.andExpect(status().isOk());
+		mvc.perform(get("/shopify/product/b"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.inventoryCount", is(199)));
+	}
+	
+	@Test
+	public void testPurchaseUnAvailProduct() throws Exception {
+		mvc.perform(post("/shopify/purchase?product=e"))
+			.andExpect(status().is4xxClientError())
+			.andExpect(jsonPath("$.status", is(400)))
+			.andExpect(jsonPath("$.reason", is("There is no e avaiable!")));
+		mvc.perform(get("/shopify/product/e"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.inventoryCount", is(0)));
+	}
 
 }
