@@ -1,0 +1,2 @@
+before_script: cd shopify
+language: java

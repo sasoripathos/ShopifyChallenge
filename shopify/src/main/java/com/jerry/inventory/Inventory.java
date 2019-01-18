@@ -20,9 +20,12 @@ public class Inventory {
 		private static final long serialVersionUID = -3208985187141932011L;
 		
 		{
-			add(new Product("a", 100.50, 5));
-			add(new Product("b", 100.50, 3));
-			add(new Product("c", 100.50, 0));
+			add(new Product("a", 100.50, 100));
+			add(new Product("b", 56.50, 200));
+			add(new Product("c", 70000.50, 3));
+			add(new Product("d", 5.78, 5));
+			add(new Product("e", 15.25, 0));
+			add(new Product("f", 5000.45, 75));
 		}
 	};
 	
