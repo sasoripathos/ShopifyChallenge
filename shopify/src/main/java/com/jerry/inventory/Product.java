@@ -40,7 +40,7 @@ public class Product {
 	
 	public void purchase() throws ProductNotAvailableException {
 		if (inventoryCount <= 0) {
-			throw new ProductNotAvailableException("There is no " + title + "avaiable!");
+			throw new ProductNotAvailableException("There is no " + title + " avaiable!");
 		}
 		inventoryCount--;
 	}
